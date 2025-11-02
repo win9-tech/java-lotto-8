@@ -27,5 +27,7 @@ public class LottoController {
         List<Lotto> lottoTickets = lottoStore.createLotto(amount);
         outputView.printPurchaseCount(lottoTickets.size());
         outputView.printAllLottoNumbers(lottoTickets);
+
+        String winNumberInput = inputView.requestWinNumber();
     }
 }
