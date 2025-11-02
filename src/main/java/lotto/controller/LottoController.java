@@ -22,12 +22,22 @@ public class LottoController {
     }
 
     public void run() {
+        purchaseLotto();
+
+
+    }
+
+    private void purchaseLotto() {
         String amountInput = inputView.requestMoney();
         PurchaseAmount amount = PurchaseAmount.of(amountInput);
         List<Lotto> lottoTickets = lottoStore.createLotto(amount);
+
         outputView.printPurchaseCount(lottoTickets.size());
         outputView.printAllLottoNumbers(lottoTickets);
+    }
 
+    private void generateWinLotto() {
         String winNumberInput = inputView.requestWinNumber();
+        String bonusNumberInput = inputView.requestBonusNumber();
     }
 }
