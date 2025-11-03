@@ -1,6 +1,7 @@
 package lotto;
 
 import lotto.controller.LottoController;
+import lotto.domain.LottoMachine;
 import lotto.domain.LottoStore;
 import lotto.view.InputView;
 import lotto.view.OutputView;
@@ -8,7 +9,7 @@ import lotto.view.OutputView;
 public final class AppConfig {
 
     public LottoController getLottoController() {
-        return new LottoController(getInputView(), getOutputview(), getLottoStore());
+        return new LottoController(getInputView(), getOutputview(), getLottoStore(), getLottoMachine());
     }
 
     private InputView getInputView() {
@@ -21,5 +22,9 @@ public final class AppConfig {
 
     private LottoStore getLottoStore() {
         return new LottoStore();
+    }
+
+    private LottoMachine getLottoMachine() {
+        return new LottoMachine();
     }
 }
