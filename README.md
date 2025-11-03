@@ -205,3 +205,44 @@ public class Lotto {
 - [x] 보너스 번호가 당첨 번호와 중복될 경우
 - [x] 보너스 번호가 숫자가 아닌 경우
 - [x] 보너스 번호 입력이 공백 또는 입력되지 않은 경우
+
+## 패키지 구조
+
+````
+src
+ └─ main
+     └─ java
+         └─ lotto
+             ├─ controller
+             │   └─ LottoController           — 전체 흐름 오케스트레이션
+             │
+             ├─ domain
+             │   ├─ Calculator                — 등수 집계로 수익률 계산
+             │   ├─ Lotto                     — 로또 한 장(번호 6개) 도메인, 유효성 검증
+             │   ├─ LottoMachine              — 당첨 번호 + 보너스 생성
+             │   ├─ LottoMatcher              — 구매 로또 vs 당첨 번호 비교, 등수 집계
+             │   ├─ LottoRank                 — 등수/필요 일치 수/상금 정의(enum)
+             │   ├─ LottoStore                — 구매 금액 → 티켓 생성(난수 전략 사용)
+             │   ├─ PurchaseAmount            — 구매 금액 값 객체, 단위/형식 검증
+             │   └─ WinLotto                  — 당첨 번호/보너스 도메인, 규칙 검증
+             │
+             ├─ generator
+             │   ├─ LottoNumberGenerator      — 로또 번호 생성 전략 인터페이스
+             │   └─ MissionUtilsLottoNumberGenerator — MissionUtils 기반 실제 생성기
+             │
+             ├─ util
+             │   ├─ constant
+             │   │   ├─ ErrorMessages         — 에러 메시지 상수 모음
+             │   │   ├─ LottoRules            — 번호 범위/개수/가격 등 도메인 규칙 상수
+             │   │   └─ UiMessage             — 입출력 안내/결과 포맷 문자열
+             │   │
+             │   └─ parser
+             │       └─ NumbersParser         — 문자열 입력 → 숫자 리스트/보너스 파싱
+             │
+             ├─ view
+             │   ├─ InputView                 — 콘솔 입력 요청/수신
+             │   └─ OutputView                — 구매 결과/통계/수익률 출력
+             │
+             ├─ AppConfig                     — 의존성 조립(생성자 주입, 전략 바인딩)
+             └─ Application                   — 프로그램 엔트리포인트
+````
