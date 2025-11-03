@@ -6,6 +6,7 @@ import lotto.domain.LottoRank;
 
 import java.util.List;
 import java.util.Map;
+import java.text.DecimalFormat;
 
 public class OutputView {
 
@@ -25,16 +26,21 @@ public class OutputView {
 
     public void printResult(Map<LottoRank, Integer> rankCount, double record) {
         System.out.println();
-        System.out.printf(UiMessage.RESULT_FORMAT,
+        String text = String.format(UiMessage.RESULT_FORMAT,
                 rankCount.getOrDefault(LottoRank.FIFTH, 0),
                 rankCount.getOrDefault(LottoRank.FOURTH, 0),
                 rankCount.getOrDefault(LottoRank.THIRD, 0),
                 rankCount.getOrDefault(LottoRank.SECOND, 0),
                 rankCount.getOrDefault(LottoRank.FIRST, 0),
-                record);
+                formatRate(record));
+        System.out.print(text);
     }
 
     public void printException(String message) {
         System.out.println(message);
+    }
+    private String formatRate(double rate) {
+        // 62.50 -> 62.5, 62.00 -> 62
+        return new DecimalFormat("#.#").format(rate) + "%";
     }
 }
