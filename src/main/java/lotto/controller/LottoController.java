@@ -20,25 +20,29 @@ public class LottoController {
     private final LottoStore lottoStore;
     private final LottoMachine lottoMachine;
     private final LottoMatcher lottoMatcher;
+    private final Calculator calculator;
 
     public LottoController(
             InputView inputView,
             OutputView outputView,
             LottoStore lottoStore,
             LottoMachine lottoMachine,
-            LottoMatcher lottoMatcher
+            LottoMatcher lottoMatcher,
+            Calculator calculator
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.lottoStore = lottoStore;
         this.lottoMachine = lottoMachine;
         this.lottoMatcher = lottoMatcher;
+        this.calculator = calculator;
     }
 
     public void run() {
         List<Lotto> lottoTickets = purchaseLotto();
         WinLotto winLotto = createWinLotto();
         compareResult(lottoTickets, winLotto);
+        calculateProfitRate();
     }
 
     private List<Lotto> purchaseLotto() {
@@ -64,6 +68,10 @@ public class LottoController {
 
     private void compareResult(List<Lotto> lottoTickets, WinLotto winLotto) {
         lottoMatcher.compareLotto(lottoTickets, winLotto);
+    }
+
+    private void calculateProfitRate() {
+        calculator.getRateOfReturn(lottoMatcher.getRankCount());
     }
 
     private List<Integer> parseWinningNumbers(String input) {
