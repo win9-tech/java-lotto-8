@@ -9,8 +9,6 @@ import java.util.List;
 
 public class LottoController {
 
-    private static final String DELIMITER = ",";
-
     private final InputView inputView;
     private final OutputView outputView;
     private final LottoStore lottoStore;
@@ -35,11 +33,15 @@ public class LottoController {
     }
 
     public void run() {
-        List<Lotto> lottoTickets = purchaseLotto();
-        WinLotto winLotto = createWinLotto();
-        compareResult(lottoTickets, winLotto);
-        calculateProfitRate();
-        displayResult();
+        try {
+            List<Lotto> lottoTickets = purchaseLotto();
+            WinLotto winLotto = createWinLotto();
+            compareResult(lottoTickets, winLotto);
+            calculateProfitRate();
+            displayResult();
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+        }
     }
 
     private List<Lotto> purchaseLotto() {
