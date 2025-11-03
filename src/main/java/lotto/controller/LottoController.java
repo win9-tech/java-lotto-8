@@ -33,36 +33,62 @@ public class LottoController {
     }
 
     public void run() {
-        try {
-            List<Lotto> lottoTickets = purchaseLotto();
-            WinLotto winLotto = createWinLotto();
-            compareResult(lottoTickets, winLotto);
-            calculateProfitRate();
-            displayResult();
-        } catch (IllegalArgumentException e) {
-            outputView.printException(e.getMessage());
+        List<Lotto> lottoTickets = purchaseLottoWithRetry();
+        WinLotto winLotto = createWinLottoWithRetry();
+        compareResult(lottoTickets, winLotto);
+        calculateProfitRate();
+        displayResult();
+    }
+
+    private List<Lotto> purchaseLottoWithRetry() {
+        while (true) {
+            try {
+                String amountInput = inputView.requestMoney();
+                PurchaseAmount amount = PurchaseAmount.of(amountInput);
+                List<Lotto> lottoTickets = lottoStore.createLotto(amount);
+                outputView.printPurchaseCount(lottoTickets.size());
+                outputView.printAllLottoNumbers(lottoTickets);
+                return lottoTickets;
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                outputView.printException(e.getMessage());
+            }
         }
     }
 
-    private List<Lotto> purchaseLotto() {
-        String amountInput = inputView.requestMoney();
-        PurchaseAmount amount = PurchaseAmount.of(amountInput);
-
-        List<Lotto> lottoTickets = lottoStore.createLotto(amount);
-        outputView.printPurchaseCount(lottoTickets.size());
-        outputView.printAllLottoNumbers(lottoTickets);
-
-        return lottoTickets;
+    private WinLotto createWinLottoWithRetry() {
+        List<Integer> winNumbers = requestWinNumbersWithRetry();
+        while (true) {
+            try {
+                int bonusNumber = requestBonusNumberWithRetry();
+                return lottoMachine.drawingLotto(winNumbers, bonusNumber);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                outputView.printException(e.getMessage());
+            }
+        }
     }
 
-    private WinLotto createWinLotto() {
-        String winNumberInput = inputView.requestWinNumber();
-        String bonusNumberInput = inputView.requestBonusNumber();
+    private List<Integer> requestWinNumbersWithRetry() {
+        while (true) {
+            try {
+                String winNumberInput = inputView.requestWinNumber();
+                List<Integer> winNumbers = NumbersParser.parseWinningNumbers(winNumberInput);
+                new Lotto(winNumbers);
+                return winNumbers;
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                outputView.printException(e.getMessage());
+            }
+        }
+    }
 
-        List<Integer> winNumbers = NumbersParser.parseWinningNumbers(winNumberInput);
-        int bonusNumber = NumbersParser.parseBonusNumber(bonusNumberInput);
-
-        return lottoMachine.drawingLotto(winNumbers, bonusNumber);
+    private int requestBonusNumberWithRetry() {
+        while (true) {
+            try {
+                String bonusNumberInput = inputView.requestBonusNumber();
+                return NumbersParser.parseBonusNumber(bonusNumberInput);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                outputView.printException(e.getMessage());
+            }
+        }
     }
 
     private void compareResult(List<Lotto> lottoTickets, WinLotto winLotto) {
