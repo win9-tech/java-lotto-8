@@ -1,6 +1,6 @@
 package lotto.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import lotto.generator.LottoNumberGenerator;
 import lotto.util.constant.LottoRules;
 
 import static lotto.util.constant.LottoRules.*;
@@ -10,6 +10,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LottoStore {
+
+    private final LottoNumberGenerator lottoNumberGenerator;
+
+    public LottoStore(LottoNumberGenerator lottoNumberGenerator) {
+        this.lottoNumberGenerator = lottoNumberGenerator;
+    }
 
     public List<Lotto> createLotto(PurchaseAmount amount) {
         int lottoCount = calculateLottoCount(amount.value());
@@ -23,6 +29,6 @@ public class LottoStore {
     }
 
     private List<Integer> createRandomNumbers() {
-        return Randoms.pickUniqueNumbersInRange(MIN, MAX, PICK_COUNT);
+        return lottoNumberGenerator.generate(MIN, MAX, PICK_COUNT);
     }
 }

@@ -5,6 +5,8 @@ import lotto.domain.Calculator;
 import lotto.domain.LottoMachine;
 import lotto.domain.LottoMatcher;
 import lotto.domain.LottoStore;
+import lotto.generator.LottoNumberGenerator;
+import lotto.generator.MissionUtilsLottoNumberGenerator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -30,7 +32,7 @@ public final class AppConfig {
     }
 
     private LottoStore getLottoStore() {
-        return new LottoStore();
+        return new LottoStore(getLottoNumberGenerator());
     }
 
     private LottoMachine getLottoMachine() {
@@ -43,5 +45,9 @@ public final class AppConfig {
 
     private Calculator getCalculator() {
         return new Calculator();
+    }
+
+    private LottoNumberGenerator getLottoNumberGenerator() {
+        return new MissionUtilsLottoNumberGenerator();
     }
 }
