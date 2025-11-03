@@ -1,4 +1,4 @@
-package lotto.common.config;
+package lotto;
 
 import lotto.controller.LottoController;
 import lotto.domain.Calculator;

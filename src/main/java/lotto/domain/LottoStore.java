@@ -1,9 +1,9 @@
 package lotto.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import lotto.common.constant.LottoRules;
+import lotto.util.constant.LottoRules;
 
-import static lotto.common.constant.LottoRules.*;
+import static lotto.util.constant.LottoRules.*;
 
 import java.util.List;
 import java.util.stream.Collectors;

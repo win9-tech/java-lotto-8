@@ -1,6 +1,6 @@
 package lotto.domain;
 
-import lotto.common.constant.LottoRules;
+import lotto.util.constant.LottoRules;
 
 import java.util.Map;
 

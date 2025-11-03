@@ -1,6 +1,6 @@
 package lotto.view;
 
-import lotto.common.constant.UiMessage;
+import lotto.util.constant.UiMessage;
 import lotto.domain.Lotto;
 import lotto.domain.LottoRank;
 

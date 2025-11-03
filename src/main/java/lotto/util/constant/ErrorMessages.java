@@ -1,4 +1,4 @@
-package lotto.common.constant;
+package lotto.util.constant;
 
 public final class ErrorMessages {
 
