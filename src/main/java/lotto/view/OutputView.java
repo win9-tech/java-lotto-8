@@ -11,6 +11,8 @@ public class OutputView {
     private static final String PURCHASE_MESSAGE = "개를 구매했습니다.";
 
     public static final String RESULT_FORMAT = """
+                당첨 통계
+                ---
                 3개 일치 (5,000원) - %d개
                 4개 일치 (50,000원) - %d개
                 5개 일치 (1,500,000원) - %d개
@@ -34,6 +36,7 @@ public class OutputView {
     }
 
     public void printResult(Map<LottoRank, Integer> rankCount, double record) {
+        System.out.println();
         System.out.printf(RESULT_FORMAT,
                 rankCount.getOrDefault(LottoRank.FIFTH, 0),
                 rankCount.getOrDefault(LottoRank.FOURTH, 0),
