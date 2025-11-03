@@ -28,5 +28,8 @@ public class Lotto {
         if (uniqueNumbers.size() != numbers.size()) {
             throw new IllegalArgumentException(ErrorMessages.WIN_DUPLICATE);
         }
+        if (numbers.stream().anyMatch(num -> num < LottoRules.MIN || num > LottoRules.MAX)) {
+            throw new IllegalArgumentException(ErrorMessages.OUT_OF_RANGE);
+        }
     }
 }
