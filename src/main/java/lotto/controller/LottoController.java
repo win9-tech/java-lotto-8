@@ -1,10 +1,6 @@
 package lotto.controller;
 
-import lotto.domain.Lotto;
-import lotto.domain.LottoMachine;
-import lotto.domain.LottoStore;
-import lotto.domain.PurchaseAmount;
-import lotto.domain.WinLotto;
+import lotto.domain.*;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -23,22 +19,26 @@ public class LottoController {
     private final OutputView outputView;
     private final LottoStore lottoStore;
     private final LottoMachine lottoMachine;
+    private final LottoMatcher lottoMatcher;
 
     public LottoController(
             InputView inputView,
             OutputView outputView,
             LottoStore lottoStore,
-            LottoMachine lottoMachine
+            LottoMachine lottoMachine,
+            LottoMatcher lottoMatcher
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.lottoStore = lottoStore;
         this.lottoMachine = lottoMachine;
+        this.lottoMatcher = lottoMatcher;
     }
 
     public void run() {
         List<Lotto> lottoTickets = purchaseLotto();
         WinLotto winLotto = createWinLotto();
+        compareResult(lottoTickets, winLotto);
     }
 
     private List<Lotto> purchaseLotto() {
@@ -60,6 +60,10 @@ public class LottoController {
         int bonusNumber = parseBonusNumber(bonusNumberInput);
 
         return lottoMachine.drawingLotto(winNumbers, bonusNumber);
+    }
+
+    private void compareResult(List<Lotto> lottoTickets, WinLotto winLotto) {
+        lottoMatcher.compareLotto(lottoTickets, winLotto);
     }
 
     private List<Integer> parseWinningNumbers(String input) {
