@@ -1,5 +1,8 @@
 package lotto.domain;
 
+import lotto.common.constant.ErrorMessages;
+import lotto.common.constant.LottoRules;
+
 import java.util.List;
 
 public class Lotto {
@@ -16,8 +19,8 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+        if (numbers.size() != LottoRules.PICK_COUNT) {
+            throw new IllegalArgumentException(ErrorMessages.INVALID_NUMBER_COUNT);
         }
     }
 }

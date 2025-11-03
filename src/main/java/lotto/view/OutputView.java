@@ -1,5 +1,6 @@
 package lotto.view;
 
+import lotto.common.constant.UiMessage;
 import lotto.domain.Lotto;
 import lotto.domain.LottoRank;
 
@@ -8,22 +9,9 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final String PURCHASE_MESSAGE = "개를 구매했습니다.";
-
-    public static final String RESULT_FORMAT = """
-                당첨 통계
-                ---
-                3개 일치 (5,000원) - %d개
-                4개 일치 (50,000원) - %d개
-                5개 일치 (1,500,000원) - %d개
-                5개 일치, 보너스 볼 일치 (30,000,000원) - %d개
-                6개 일치 (2,000,000,000원) - %d개
-                총 수익률은 %.2f%%입니다.
-                """;
-
     public void printPurchaseCount(int count) {
         System.out.println();
-        System.out.println(count + PURCHASE_MESSAGE);
+        System.out.println(count + UiMessage.PURCHASE_MESSAGE);
     }
 
     public void printAllLottoNumbers(List<Lotto> lottoTickets) {
@@ -37,7 +25,7 @@ public class OutputView {
 
     public void printResult(Map<LottoRank, Integer> rankCount, double record) {
         System.out.println();
-        System.out.printf(RESULT_FORMAT,
+        System.out.printf(UiMessage.RESULT_FORMAT,
                 rankCount.getOrDefault(LottoRank.FIFTH, 0),
                 rankCount.getOrDefault(LottoRank.FOURTH, 0),
                 rankCount.getOrDefault(LottoRank.THIRD, 0),

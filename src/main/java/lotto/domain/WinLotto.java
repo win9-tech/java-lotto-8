@@ -1,5 +1,8 @@
 package lotto.domain;
 
+import lotto.common.constant.ErrorMessages;
+import lotto.common.constant.LottoRules;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,25 +14,25 @@ public record WinLotto(List<Integer> lotto, int bonus) {
     }
 
     private void validate(List<Integer> lotto, int bonus) {
-        if (lotto.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 당첨 번호는 6개여야 합니다.");
+        if (lotto.size() != LottoRules.PICK_COUNT) {
+            throw new IllegalArgumentException(ErrorMessages.WIN_INVALID_COUNT);
         }
 
-        if (lotto.stream().anyMatch(num -> num < 1 || num > 45)) {
-            throw new IllegalArgumentException("[ERROR] 당첨 번호는 1~45 범위여야 합니다.");
+        if (lotto.stream().anyMatch(num -> num < LottoRules.MIN || num > LottoRules.MAX)) {
+            throw new IllegalArgumentException(ErrorMessages.WIN_OUT_OF_RANGE);
         }
 
         Set<Integer> unique = new HashSet<>(lotto);
         if (unique.size() != lotto.size()) {
-            throw new IllegalArgumentException("[ERROR] 당첨 번호에 중복된 숫자가 있습니다.");
+            throw new IllegalArgumentException(ErrorMessages.WIN_DUPLICATE);
         }
 
-        if (bonus < 1 || bonus > 45) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 범위여야 합니다.");
+        if (bonus < LottoRules.MIN || bonus > LottoRules.MAX) {
+            throw new IllegalArgumentException(ErrorMessages.BONUS_OUT_OF_RANGE);
         }
 
         if (unique.contains(bonus)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+            throw new IllegalArgumentException(ErrorMessages.BONUS_DUPLICATE_WITH_WIN);
         }
     }
 }

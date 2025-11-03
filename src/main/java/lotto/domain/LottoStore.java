@@ -1,14 +1,15 @@
 package lotto.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.common.constant.LottoRules;
+
+import static lotto.common.constant.LottoRules.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LottoStore {
-
-    private static final int PRICE_PER_TICKET = 1000;
 
     public List<Lotto> createLotto(PurchaseAmount amount) {
         int lottoCount = calculateLottoCount(amount.value());
@@ -18,10 +19,10 @@ public class LottoStore {
     }
 
     private int calculateLottoCount(int amount) {
-        return amount / PRICE_PER_TICKET;
+        return amount / LottoRules.PRICE_PER_TICKET;
     }
 
     private List<Integer> createRandomNumbers() {
-        return Randoms.pickUniqueNumbersInRange(1, 45, 6);
+        return Randoms.pickUniqueNumbersInRange(MIN, MAX, PICK_COUNT);
     }
 }

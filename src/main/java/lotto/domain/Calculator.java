@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.common.constant.LottoRules;
+
 import java.util.Map;
 
 public class Calculator {
@@ -15,7 +17,7 @@ public class Calculator {
                 .mapToInt(entry -> entry.getKey().reward * entry.getValue())
                 .sum();
 
-        int totalInvestment = 1000 * count;
+        int totalInvestment = LottoRules.PRICE_PER_TICKET * count;
 
         record = (double) profit / totalInvestment * 100;
     }
