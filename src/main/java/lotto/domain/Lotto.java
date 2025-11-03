@@ -26,7 +26,7 @@ public class Lotto {
         }
         Set<Integer> uniqueNumbers = new HashSet<>(numbers);
         if (uniqueNumbers.size() != numbers.size()) {
-            throw new IllegalArgumentException(ErrorMessages.WIN_DUPLICATE);
+            throw new IllegalArgumentException(ErrorMessages.DUPLICATE);
         }
         if (numbers.stream().anyMatch(num -> num < LottoRules.MIN || num > LottoRules.MAX)) {
             throw new IllegalArgumentException(ErrorMessages.OUT_OF_RANGE);
