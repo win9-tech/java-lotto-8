@@ -16,6 +16,7 @@ public class OutputView {
                 5개 일치 (1,500,000원) - %d개
                 5개 일치, 보너스 볼 일치 (30,000,000원) - %d개
                 6개 일치 (2,000,000,000원) - %d개
+                총 수익률은 %.2f%%입니다.
                 """;
 
     public void printPurchaseCount(int count) {
@@ -38,8 +39,8 @@ public class OutputView {
                 rankCount.getOrDefault(LottoRank.FOURTH, 0),
                 rankCount.getOrDefault(LottoRank.THIRD, 0),
                 rankCount.getOrDefault(LottoRank.SECOND, 0),
-                rankCount.getOrDefault(LottoRank.FIRST, 0)
-                );
+                rankCount.getOrDefault(LottoRank.FIRST, 0),
+                record);
     }
 
     public void printException(String message) {
