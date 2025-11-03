@@ -17,6 +17,24 @@ public class LottoMatcher {
     }
 
     public void compareLotto(List<Lotto> lottoList, WinLotto winLotto) {
+        lottoList.forEach(lotto -> updateRank(lotto, winLotto));
+    }
+
+    private void updateRank(Lotto lotto, WinLotto winLotto) {
+        LottoRank rank = determineRank(lotto, winLotto);
+        rankCounts.put(rank, rankCounts.get(rank) + 1);
+    }
+
+    private LottoRank determineRank(Lotto lotto, WinLotto winLotto) {
+        int count = compareWinNumber(lotto, winLotto);
+        boolean bonus = compareBonusNumber(lotto, winLotto);
+
+        if (count == 6) return LottoRank.FIRST;
+        if (count == 5 && bonus) return LottoRank.SECOND;
+        if (count == 5) return LottoRank.THIRD;
+        if (count == 4) return LottoRank.FOURTH;
+        if (count == 3) return LottoRank.FIFTH;
+        return LottoRank.NONE;
     }
 
     private int compareWinNumber(Lotto lotto, WinLotto winLotto) {
