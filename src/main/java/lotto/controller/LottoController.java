@@ -1,11 +1,10 @@
 package lotto.controller;
 
-import lotto.common.constant.ErrorMessages;
 import lotto.domain.*;
+import lotto.util.parser.NumbersParser;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class LottoController {
@@ -58,8 +57,8 @@ public class LottoController {
         String winNumberInput = inputView.requestWinNumber();
         String bonusNumberInput = inputView.requestBonusNumber();
 
-        List<Integer> winNumbers = parseWinningNumbers(winNumberInput);
-        int bonusNumber = parseBonusNumber(bonusNumberInput);
+        List<Integer> winNumbers = NumbersParser.parseWinningNumbers(winNumberInput);
+        int bonusNumber = NumbersParser.parseBonusNumber(bonusNumberInput);
 
         return lottoMachine.drawingLotto(winNumbers, bonusNumber);
     }
@@ -74,30 +73,5 @@ public class LottoController {
 
     private void displayResult() {
         outputView.printResult(lottoMatcher.getRankCount(), calculator.getRecord());
-    }
-
-    private List<Integer> parseWinningNumbers(String input) {
-        if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessages.ERR_WIN_EMPTY);
-        }
-        try {
-            return Arrays.stream(input.split(DELIMITER))
-                    .map(String::strip)
-                    .map(Integer::parseInt)
-                    .toList();
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessages.ERR_WIN_NAN);
-        }
-    }
-
-    private int parseBonusNumber(String input) {
-        if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessages.ERR_BONUS_EMPTY);
-        }
-        try {
-            return Integer.parseInt(input.trim());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessages.ERR_BONUS_NAN);
-        }
     }
 }
