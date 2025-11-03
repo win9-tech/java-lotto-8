@@ -43,6 +43,7 @@ public class LottoController {
         WinLotto winLotto = createWinLotto();
         compareResult(lottoTickets, winLotto);
         calculateProfitRate();
+        displayResult();
     }
 
     private List<Lotto> purchaseLotto() {
@@ -72,6 +73,10 @@ public class LottoController {
 
     private void calculateProfitRate() {
         calculator.getRateOfReturn(lottoMatcher.getRankCount());
+    }
+
+    private void displayResult() {
+        outputView.printResult(lottoMatcher.getRankCount(), calculator.getRecord());
     }
 
     private List<Integer> parseWinningNumbers(String input) {
