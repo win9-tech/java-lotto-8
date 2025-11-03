@@ -37,17 +37,19 @@ public class LottoController {
     }
 
     public void run() {
-        purchaseLotto();
+        List<Lotto> lottoTickets = purchaseLotto();
         WinLotto winLotto = createWinLotto();
     }
 
-    private void purchaseLotto() {
+    private List<Lotto> purchaseLotto() {
         String amountInput = inputView.requestMoney();
         PurchaseAmount amount = PurchaseAmount.of(amountInput);
 
         List<Lotto> lottoTickets = lottoStore.createLotto(amount);
         outputView.printPurchaseCount(lottoTickets.size());
         outputView.printAllLottoNumbers(lottoTickets);
+
+        return lottoTickets;
     }
 
     private WinLotto createWinLotto() {
